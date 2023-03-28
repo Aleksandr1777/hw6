@@ -1,55 +1,66 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-        int[] unsortedArray = new int[20];
+        int[] unsortedArray = new int[100000];
         Random random = new Random();
         for (int i = 0; i < unsortedArray.length; i++) {
             unsortedArray[i] = random.nextInt(100);
         }
-        print(unsortedArray);
-
+        // print(unsortedArray);
+        long start1 = System.currentTimeMillis();
         int[] sortedArrayBySelectionSort = selectionSort(unsortedArray);
+        long end1 = System.currentTimeMillis();
         print(sortedArrayBySelectionSort);
+        long absoluteTime1 = end1 - start1;
+
+        long start2 = System.currentTimeMillis();
         int[] sortedArrayByBubbleSort = bubbleSort(unsortedArray);
+        long end2 = System.currentTimeMillis();
+        long absoluteTime2 = end2 - start2;
         print(sortedArrayByBubbleSort);
 
+        System.out.println(absoluteTime1);
+        System.out.println(absoluteTime2);
 
 
 
     }
 
     public static int[] selectionSort(int[] array){
+        int[] arrayCopy = Arrays.copyOf(array,array.length);
 
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < arrayCopy.length; i++) {
             int min = Integer.MAX_VALUE;
             int index = -1;
-            for (int j = i; j < array.length; j++) {
-                if (array[j]<min) {
-                    min = array[j];
+            for (int j = i; j < arrayCopy.length; j++) {
+                if (arrayCopy[j]<min) {
+                    min = arrayCopy[j];
                     index = j;
                 }
             }
             if (index>-1) {
-                int z = array[i];
-                array[i] = array[index];
-                array[index] = z;
+                int z = arrayCopy[i];
+                arrayCopy[i] = arrayCopy[index];
+                arrayCopy[index] = z;
             }
         }
-        return array;
+        return arrayCopy;
     }
 
     public static int[] bubbleSort(int[] array){
-        for (int j = 0; j<array.length ; j++) {
-            for (int i = array.length-1; i > j; i--) {
-                if (array[i] < array[i - 1]) {
-                    int z = array[i];
-                    array[i] = array[i - 1];
-                    array[i - 1] = z;
+        int[] arrayCopy = Arrays.copyOf(array,array.length);
+        for (int j = 0; j<arrayCopy.length ; j++) {
+            for (int i = arrayCopy.length-1; i > j; i--) {
+                if (arrayCopy[i] < arrayCopy[i - 1]) {
+                    int z = arrayCopy[i];
+                    arrayCopy[i] = arrayCopy[i - 1];
+                    arrayCopy[i - 1] = z;
                 }
             }
         }
-        return array;
+        return arrayCopy;
     }
     public static void print(int[] array){
         for (int i = 0; i < array.length; i++) {
